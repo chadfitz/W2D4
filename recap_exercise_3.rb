@@ -207,19 +207,6 @@ def multiply(a, b)
     end
 end
 
-# def multiply(a, b)
-#     return 0 if b == 0
-
-#     if b > 0
-#         a + multiply(a, b - 1)
-#     else
-#         -(a - multiply(a, b + 1))
-#     end
-# end
-   
-
-#4*2 = 2 + 2 + 2 + 2 = 2+(3*2)
-
 p multiply(3, 5)        # => 15
 p multiply(5, 3)        # => 15
 p multiply(2, 4)        # => 8
@@ -233,7 +220,10 @@ def lucas_sequence(length)
     return [] if length == 0
     return [2] if length == 1
     return [2,1] if length == 2
-    
+   
+    seq = lucas_sequence(length-1)
+    seq << seq[-1] + seq[-2]
+    seq
 end
 
 p lucas_sequence(0)   # => []
@@ -243,3 +233,21 @@ p lucas_sequence(3)   # => [2, 1, 3]
 p lucas_sequence(6)   # => [2, 1, 3, 4, 7, 11]
 p lucas_sequence(8)   # => [2, 1, 3, 4, 7, 11, 18, 29]
 puts "----------"
+
+def prime_factorization(num)
+    (2...num).each do |factor|
+        if num % factor == 0
+            other_factor = num/factor
+            return [*prime_factorization(factor), *prime_factorization(other_factor)]
+        end
+    end
+    [num]
+end
+
+p prime_factorization(12)     # => [2, 2, 3]
+p prime_factorization(24)     # => [2, 2, 2, 3]
+p prime_factorization(25)     # => [5, 5]
+p prime_factorization(60)     # => [2, 2, 3, 5]
+p prime_factorization(7)      # => [7]
+p prime_factorization(11)     # => [11]
+p prime_factorization(2017)   # => [2017]
